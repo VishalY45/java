@@ -1,0 +1,152 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 99
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dayone             |
+| daytwo             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| practice           |
+| sakila             |
+| student            |
+| student2           |
+| sys                |
+| world              |
++--------------------+
+11 rows in set (0.02 sec)
+
+mysql> use practice;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_practice |
++--------------------+
+| test1              |
++--------------------+
+1 row in set (0.02 sec)
+
+mysql> create table test2(id int(5),name varchar(100),email varchar(100),contact varchar(100),salary varchar(100));
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> insert into test2 values(1,'vishal','vy@','323324','21123');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into test2 values(2,'soham','sh@','3233','1123');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into test2 values(3,'mohan','ssh@','3233','2000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into test2 values(4,'sunil','sh@','3233','3000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from test2 order by salary asc;
++------+--------+-------+---------+--------+
+| id   | name   | email | contact | salary |
++------+--------+-------+---------+--------+
+|    2 | soham  | sh@   | 3233    | 1123   |
+|    3 | mohan  | ssh@  | 3233    | 2000   |
+|    1 | vishal | vy@   | 323324  | 21123  |
+|    4 | sunil  | sh@   | 3233    | 3000   |
++------+--------+-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select *from test2 order by salary desc;
++------+--------+-------+---------+--------+
+| id   | name   | email | contact | salary |
++------+--------+-------+---------+--------+
+|    4 | sunil  | sh@   | 3233    | 3000   |
+|    1 | vishal | vy@   | 323324  | 21123  |
+|    3 | mohan  | ssh@  | 3233    | 2000   |
+|    2 | soham  | sh@   | 3233    | 1123   |
++------+--------+-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> update test2 set salary=1500 where id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from test2 order by salary asc;
++------+--------+-------+---------+--------+
+| id   | name   | email | contact | salary |
++------+--------+-------+---------+--------+
+|    2 | soham  | sh@   | 3233    | 1123   |
+|    1 | vishal | vy@   | 323324  | 1500   |
+|    3 | mohan  | ssh@  | 3233    | 2000   |
+|    4 | sunil  | sh@   | 3233    | 3000   |
++------+--------+-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select *from test2 order by salary desc;
++------+--------+-------+---------+--------+
+| id   | name   | email | contact | salary |
++------+--------+-------+---------+--------+
+|    4 | sunil  | sh@   | 3233    | 3000   |
+|    3 | mohan  | ssh@  | 3233    | 2000   |
+|    1 | vishal | vy@   | 323324  | 1500   |
+|    2 | soham  | sh@   | 3233    | 1123   |
++------+--------+-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select *From test2 where salary>2000 order by id asc;
++------+-------+-------+---------+--------+
+| id   | name  | email | contact | salary |
++------+-------+-------+---------+--------+
+|    4 | sunil | sh@   | 3233    | 3000   |
++------+-------+-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select *From test2 where salary in(2000,3000) order by id asc;
++------+-------+-------+---------+--------+
+| id   | name  | email | contact | salary |
++------+-------+-------+---------+--------+
+|    3 | mohan | ssh@  | 3233    | 2000   |
+|    4 | sunil | sh@   | 3233    | 3000   |
++------+-------+-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select sum(salary)from test2;
++-------------+
+| sum(salary) |
++-------------+
+|        7623 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select count(*)from test2;
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select max(salary)from test2 group by salary having count(salary)>1;
+Empty set (0.01 sec)
+
+mysql> insert into test2 values(6,'abhi','ash@','3233','2000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select max(salary)from test2 group by salary having count(salary)>1;
++-------------+
+| max(salary) |
++-------------+
+| 2000        |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>

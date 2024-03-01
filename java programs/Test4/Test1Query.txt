@@ -1,0 +1,90 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 98
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dayone             |
+| daytwo             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| practice           |
+| sakila             |
+| student            |
+| student2           |
+| sys                |
+| world              |
++--------------------+
+11 rows in set (0.07 sec)
+
+mysql> use practice;
+Database changed
+mysql> create table test1(id int(10),name varchar(10),email varchar(10),conatct varchar(10),salary varchar(10));
+Query OK, 0 rows affected, 1 warning (0.08 sec)
+
+mysql> alter table test1 add column address varchar(200);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table test1 add column(designastion varchar(200),adharno varchar(200),panno varchar(200));
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> insert into test1 (name,contact)values('vishal','32323');
+ERROR 1054 (42S22): Unknown column 'contact' in 'field list'
+mysql> insert into test1 (name,conatct)values('vishal','32323');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select distinct name from test1;
++--------+
+| name   |
++--------+
+| vishal |
++--------+
+1 row in set (0.00 sec)
+
+mysql> desc test1;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| id           | int          | YES  |     | NULL    |       |
+| name         | varchar(10)  | YES  |     | NULL    |       |
+| email        | varchar(10)  | YES  |     | NULL    |       |
+| conatct      | varchar(10)  | YES  |     | NULL    |       |
+| salary       | varchar(10)  | YES  |     | NULL    |       |
+| address      | varchar(200) | YES  |     | NULL    |       |
+| designastion | varchar(200) | YES  |     | NULL    |       |
+| adharno      | varchar(200) | YES  |     | NULL    |       |
+| panno        | varchar(200) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)
+
+mysql> insert into test1 values(1,'ram','ram@gmail.com','2323','dsdsd','devloper','32323','12323');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into test1 values(1,'ram','ram@gmail.com','2323','35435','dsdsd','devloper','32323','12323');
+ERROR 1406 (22001): Data too long for column 'email' at row 1
+mysql> insert into test1 values(1,'ram','ram@gmail','2323','35435','dsdsd','devloper','32323','12323');
+Query OK, 1 row affected (0.00 sec)
+
+mmysql> update test1 set name='deepak' where id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update test1 set name='ram',email='vy@' where id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>

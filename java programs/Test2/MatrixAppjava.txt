@@ -1,0 +1,5 @@
+import java.util.*;
+class MatrixApp{
+	 public static void main(String args[])
+	 {
+		Scaa

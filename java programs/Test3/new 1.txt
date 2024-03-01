@@ -1,0 +1,310 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dayone             |
+| daytwo             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| practice           |
+| sakila             |
+| student            |
+| student2           |
+| sys                |
+| world              |
++--------------------+
+11 rows in set (0.07 sec)
+
+mysql> use practice;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_practice |
++--------------------+
+| test1              |
+| test2              |
++--------------------+
+2 rows in set (0.02 sec)
+
+mysql> create table tset3(id int(10),name varchar(10),email varchar(10),contact varchar(10),salary varchar(10));
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+
+mysql> desc tset3;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | YES  |     | NULL    |       |
+| name    | varchar(10) | YES  |     | NULL    |       |
+| email   | varchar(10) | YES  |     | NULL    |       |
+| contact | varchar(10) | YES  |     | NULL    |       |
+| salary  | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+
+mysql> insert into tset3 values(1,'vishal','vy@g.com','213','2321323');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tset3 values(2,'Dinesh','dy@g.com','214','1321323');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tset3 values(3,'somesh,'dy@g.com','234','2000');
+    '> insert into tset3 values(3,'somesh','dy@g.com','234','2000');
+    '> ^C
+mysql>
+mysql> insert into tset3 values(3,'somesh','dy@g.com','234','2000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tset3 values(4,'ganesh','gy@g.com','264','3000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tset3 values(5,'pavan','py@g.com','2334','2000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tset3 values(6,'mohan,'mmy@g.com','12334','4000');
+    '> ^C
+mysql>
+mysql> insert into tset3 values(6,'mohan','mmy@g.com','12334','4000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from tset3;
++------+--------+-----------+---------+---------+
+| id   | name   | email     | contact | salary  |
++------+--------+-----------+---------+---------+
+|    1 | vishal | vy@g.com  | 213     | 2321323 |
+|    2 | Dinesh | dy@g.com  | 214     | 1321323 |
+|    3 | somesh | dy@g.com  | 234     | 2000    |
+|    4 | ganesh | gy@g.com  | 264     | 3000    |
+|    5 | pavan  | py@g.com  | 2334    | 2000    |
+|    6 | mohan  | mmy@g.com | 12334   | 4000    |
++------+--------+-----------+---------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update tset3 set salary=1000 where id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update tset3 set salary=6000 where id=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from tset3;
++------+--------+-----------+---------+--------+
+| id   | name   | email     | contact | salary |
++------+--------+-----------+---------+--------+
+|    1 | vishal | vy@g.com  | 213     | 1000   |
+|    2 | Dinesh | dy@g.com  | 214     | 6000   |
+|    3 | somesh | dy@g.com  | 234     | 2000   |
+|    4 | ganesh | gy@g.com  | 264     | 3000   |
+|    5 | pavan  | py@g.com  | 2334    | 2000   |
+|    6 | mohan  | mmy@g.com | 12334   | 4000   |
++------+--------+-----------+---------+--------+
+6 rows in set (0.00 sec)
+
+1)> Write SQL Query display employee count salary wise? Means you have to show the count of
+    -> employee whose salary is same^C
+	
+	
+mysql> select count(salary)from tset3 group by salary having count(salary)>1000;
+Empty set (0.01 sec)
+
+mysql> select salary,count(*)from tset3 group by salary;
++--------+----------+
+| salary | count(*) |
++--------+----------+
+| 1000   |        1 |
+| 6000   |        1 |
+| 2000   |        2 |
+| 3000   |        1 |
+| 4000   |        1 |
++--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select salary,count(*)from tset3 group by salary having count(*)>1;
++--------+----------+
+| salary | count(*) |
++--------+----------+
+| 2000   |        2 |
++--------+----------+
+1 row in set (0.00 sec)
+
+2)
+mysql> SELECT name,salary from tset3 where salary in(select salary from tset3 group by salary having count(*)>1);
++--------+--------+
+| name   | salary |
++--------+--------+
+| somesh | 2000   |
+| pavan  | 2000   |
++--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT name,salary from tset3 where salary in(select salary from tset3 where salary<1000 group by salary having count(*)>1 );
+Empty set (0.00 sec)
+
+mysql> SELECT name,salary from tset3 where salary in(select salary from tset3 where salary<10000 group by salary having count(*)>1 );
++--------+--------+
+| name   | salary |
++--------+--------+
+| somesh | 2000   |
+| pavan  | 2000   |
++--------+--------+
+2 rows in set (0.00 sec)
+
+3)
+mysql> SELECT name,salary from tset3 where salary in(select salary from tset3 where salary<10000 group by salary having count(*)>1 order by asc );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc )' at line 1
+mysql> SELECT name,salary from tset3 where salary in(select salary from tset3 where salary<10000 group by salary having count(*)>1 order by name='asc' );
++--------+--------+
+| name   | salary |
++--------+--------+
+| somesh | 2000   |
+| pavan  | 2000   |
++--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into tset3 values(7,'mohan','mmy@g.com','12334','7000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+
+
+
+
+2)
+WRITE SQL QUERY DISPLAY EMPLOYEE NAME WHOSE SALARY IS DUPLICATED
+
+select name,salary from tset3 group by salary,name having count(salary)>1;
++--------+--------+
+| name   | salary |
++--------+--------+
+| vishal | 1000   |
+| ganesh | 3000   |
++--------+--------+
+
+
+
+
+3)Write SQL Query to display employee list whose salary is duplicated and salary more than 
+10000 and arrange all employee records in ascending order?
+
+
+
+
+
+4)Write SQL query to display employee whose name same in table and display count of same 
+employee?
+
+select name,salary,count(*) from tset3 group by salary,name having count(salary)>1;
++--------+--------+----------+
+| name   | salary | count(*) |
++--------+--------+----------+
+| vishal | 1000   |        2 |
+| ganesh | 3000   |        2 |
++--------+--------+----------+
+
+
+
+Q5. Write SQL Query to display employee name whose name is ram and occur more than 2 times 
+in database table?
+
+
+select name from tset3 where name='vishal' group by name having count(*)>1;
++--------+
+| name   |
++--------+
+| vishal |
++--------+
+
+
+Q6. Write SQL Query to display list of employee whose name ends with sh and salary is more than 
+20000 ?
+> select name from tset3 where name like '%al' and salary>500;
++--------+
+| name   |
++--------+
+| vishal |
+| vishal |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select *from tset3 where name like '%al' and salary>500;
++------+--------+----------+---------+--------+
+| id   | name   | email    | contact | salary |
++------+--------+----------+---------+--------+
+|    1 | vishal | vy@g.com | 213     | 1000   |
+|    8 | vishal | vygmaail | 232323  | 1000   |
++------+--------+----------+---------+--------+
+
+
+
+Q7. Write SQL Query to display list of employee whose name contain r any where and salary is 
+10000, 20000, and 30000?
+
+mysql> select *from tset3 where name like '%a%' and salary in(1000,2000,3000);
++------+--------+----------+---------+--------+
+| id   | name   | email    | contact | salary |
++------+--------+----------+---------+--------+
+|    1 | vishal | vy@g.com | 213     | 1000   |
+|    4 | ganesh | gy@g.com | 264     | 3000   |
+|    5 | pavan  | py@g.com | 2334    | 2000   |
+|    8 | vishal | vygmaail | 232323  | 1000   |
+|    9 | ganesh | vygmaail | 232323  | 3000   |
++------+--------+----------+---------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+Q8. Write SQL Query to display list of employee whose name contain sh anywhere and salary 
+between 10000 and 50000? 
+
+ select *From tset3 where name like '%sh%' and salary>='1000' and salary<='10000';
++------+--------+----------+---------+--------+
+| id   | name   | email    | contact | salary |
++------+--------+----------+---------+--------+
+|    1 | vishal | vy@g.com | 213     | 1000   |
+|    8 | vishal | vygmaail | 232323  | 1000   |
++------+--------+----------+---------+--------+
+
+
+
+
+mysql> select *From tset3 where name like '%sh%' and salary between 1000 AND 10000;
++------+--------+----------+---------+--------+
+| id   | name   | email    | contact | salary |
++------+--------+----------+---------+--------+
+|    1 | vishal | vy@g.com | 213     | 1000   |
+|    2 | Dinesh | dy@g.com | 214     | 6000   |
+|    3 | somesh | dy@g.com | 234     | 2000   |
+|    4 | ganesh | gy@g.com | 264     | 3000   |
+|    8 | vishal | vygmaail | 232323  | 1000   |
+|    9 | ganesh | vygmaail | 232323  | 3000   |
++------+--------+----------+---------+--------+
+
+
+Q9. Write SQL Query to display list of employee whose name contain r anywhere and name occur 
+more than once in table and salary is more than 10000
+
+ysql> select name,count(name)from tset3 where name like '%v%' and salary>1000 group by name having count(*)>1;
++-------+-------------+
+| name  | count(name) |
++-------+-------------+
+| pavan |           2 |
++-------+-------------+
+1 row in set (0.00 sec)
